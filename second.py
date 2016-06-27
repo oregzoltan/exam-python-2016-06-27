@@ -8,11 +8,10 @@
 def write_three_times(filename, string):
     content = string*3
     try:
-        file = open(filename, 'a')
-        file.write(content)
+        f = open(filename, 'w')
+        f.write(content)
+        f.close()
     except:
-        file = open(filename, 'w')
-        file.write(content)
-    file.close()
-    
-write_three_times('three.txt', 'apple')
+        pass
+
+write_three_times('three.txt','apple')
