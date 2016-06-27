@@ -42,6 +42,57 @@
 
 # The following code should work with the classes
 
+class Rocket():
+    def __init__(self, type_of_rocket, fuel_level, number_of_launches):
+        self.type_of_rocket = type_of_rocket
+        self.fuel_level = fuel_level
+        self.number_of_launches = number_of_launches
+
+    def launch(self):
+        if self.type_of_rocket == 'falcon1':
+            self.fuel_level -= 1
+        elif self.type_of_rocket == 'falcon9':
+            self.fuel_level -= 9
+        self.number_of_launches += 1
+
+    def refill(self):
+        if self.type_of_rocket == 'falcon1':
+            used = 5 - self.fuel_level
+            self.fuel_level = 5
+        elif self.type_of_rocket == 'falcon9':
+            used = 20 - self.fuel_level
+            self.fuel_level = 20
+        return used
+
+    def getStats(self):
+        stat = 'name: %s, fuel: %d' % (self.type_of_rocket, self.fuel_level)
+        return stat
+
+class SpaceX():
+    def __init__(self, stored_fuel):
+        self.stored_fuel = stored_fuel
+        self.launches = 1
+        self.rockets = []
+
+    def addRocket(self, rocket):
+        self.rockets.append(rocket)
+
+    def refill_all(self):
+        for rocket in self.rockets:
+            self.stored_fuel -= rocket.refill()
+
+    def launch_all(self):
+        for rocket in self.rockets:
+            rocket.launch()
+            self.launches += 1
+
+    def buy_fuel(self, amount):
+        self.stored_fuel += amount
+
+    def getStats(self):
+        stat = 'rockets: %d, fuel: %d, launches: %d' % (len(self.rockets), self.stored_fuel, self.launches)
+        return stat
+
 
 space_x = SpaceX(100)
 falcon1 = Rocket('falcon1', 0, 0)
